@@ -362,7 +362,7 @@ def radial_quant_matrix(shape, strength=1.0):
 def compress_fft(img8, quality=50, use_huffman=True):
     """
     FFT compressor with DCT-like quality behavior PLUS stronger, visible effect:
-    - JPEG-like qf from your quality_to_scale()
+    - JPEG-like qf from quality_to_scale()
     - Low-pass keep radius grows with Quality (keeps more low-freq at high Q)
     - Dead-zone threshold at lower qualities to zero tiny coeffs
     - Length-prefixed value/count RLE, then optional Huffman (at the end)
@@ -376,7 +376,7 @@ def compress_fft(img8, quality=50, use_huffman=True):
     Fshift = np.fft.fftshift(np.fft.fft2(img))
 
     # JPEG-like scaling (same direction as DCT): higher Q -> smaller qf
-    qf = max(0.1, float(quality_to_scale(int(quality))))  # reuse your mapping
+    qf = max(0.1, float(quality_to_scale(int(quality))))  # reuse mapping
 
     # Radial weighting table (acts like a "quant table" in freq domain)
     cy, cx = H // 2, W // 2
@@ -439,7 +439,7 @@ def compress_fft(img8, quality=50, use_huffman=True):
         byts = arr.tobytes()
         huff_meta = {"bitlen": len(byts) * 8, "codebook": {}}
 
-    # Store params needed by the decoder (matches your current decompress_fft)
+    # Store params needed by the decoder (matches current decompress_fft)
     return byts, {
         "H": int(H), "W": int(W),
         "use_huffman": bool(use_huffman),
