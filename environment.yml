@@ -7,7 +7,7 @@ dependencies:
   - scipy
   - pillow
   - matplotlib
-  - imageio     # <-- add this
+  - imageio     
   - pip
   - pip:
       - streamlit
