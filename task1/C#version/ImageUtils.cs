@@ -20,14 +20,7 @@ namespace CompressionApp
             return new Bitmap(path);
         }
 
-        /// <summary>
-        /// Manual CT decoder that handles:
-        /// - 16-bit signed pixels (PixelRepresentation==1)
-        /// - BitsStored/HighBit alignment
-        /// - Rescale Slope/Intercept (to HU)
-        /// - Window Center/Width (first value if multi-valued)
-        /// - MONOCHROME1 inversion
-        /// </summary>
+       
         private static Bitmap LoadDicomCTManual(string path)
         {
             try

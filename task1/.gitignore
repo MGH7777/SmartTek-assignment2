@@ -1,0 +1,66 @@
+# General
+# OS junk
+.DS_Store
+Thumbs.db
+
+# VS Code settings (keep if you WANT to share them)
+.vscode/
+
+# Python / Streamlit
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual / Conda envs
+env/
+venv/
+.venv/
+.smarttek/
+smarttek/
+smarttek2/
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data / cache
+.streamlit/
+.pytest_cache/
+.mypy_cache/
+.pytype/
+.cache/
+logs/
+*.log
+
+# .NET / C# (WPF / WinForms / CLI)
+# Build outputs
+bin/
+obj/
+
+# Visual Studio stuff (in case you ever open in VS)
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Misc editor / tooling
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# Project-specific
+DICOMS/
+*.dcm
+*.zip

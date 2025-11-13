@@ -29,7 +29,7 @@ namespace CompressionApp
             return (compressedImage, psnr, compressionRatio);
         }
 
-        // FFT path (unchanged logic)
+        // FFT path 
         private static double[,] CompressFFT(double[,] input, double quality, bool useHuffman, out double compressionRatio)
         {
             int h = input.GetLength(0);
@@ -70,7 +70,7 @@ namespace CompressionApp
             return output;
         }
 
-        // DCT path (no nullable list now)
+        // DCT path
         private static double[,] CompressDCT(double[,] input, double quality01, bool useHuffman, out double compressionRatio)
         {
             const int N = 8;
@@ -78,7 +78,7 @@ namespace CompressionApp
             int w = input.GetLength(1);
 
             double[,] output = new double[h, w];
-            var allQuantized = new List<int>();  // ✅ always exists
+            var allQuantized = new List<int>();  
 
             int[,] Qbase = {
                 {16,11,10,16,24,40,51,61},
@@ -131,13 +131,33 @@ namespace CompressionApp
                 }
             }
 
-            if (useHuffman)
-                compressionRatio = ComputeHuffmanCompressionRatio(allQuantized.Select(v => (double)v).ToArray2D(1, allQuantized.Count));
-            else
-                compressionRatio = double.NaN;
+                if (useHuffman)
+                {
+                    int[] symbols = allQuantized.ToArray();
 
-            return output;
-        }
+                    if (symbols.Length > 0)
+                    {
+                        var (codeTable, bitstream) = Huffman.Encode(symbols);
+
+                        // Assume coefficients would otherwise be stored as 16-bit ints
+                        double originalBits   = 16.0 * symbols.Length;
+                        double compressedBits = bitstream.Length; // one char per bit
+
+                        compressionRatio = originalBits / Math.Max(1.0, compressedBits);
+                    }
+                    else
+                    {
+                        compressionRatio = double.NaN;
+                    }
+                }
+                else
+                {
+                    compressionRatio = double.NaN;
+                }
+
+                return output;
+            }
+
 
         private static void FFT2D(Complex[,] data, bool forward)
         {

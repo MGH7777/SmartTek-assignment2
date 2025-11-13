@@ -35,3 +35,4 @@ C:\Users\m_kra\Desktop\Projects\SmartTek-assignment2\task1\C#version\obj\Debug\n
 C:\Users\m_kra\Desktop\Projects\SmartTek-assignment2\task1\C#version\obj\Debug\net8.0-windows7.0\CompressionApp.pdb
 C:\Users\m_kra\Desktop\Projects\SmartTek-assignment2\task1\C#version\obj\Debug\net8.0-windows7.0\CompressionApp.genruntimeconfig.cache
 C:\Users\m_kra\Desktop\Projects\SmartTek-assignment2\task1\C#version\obj\Debug\net8.0-windows7.0\ref\CompressionApp.dll
+C:\Users\m_kra\Desktop\Projects\SmartTek-assignment2\task1\C#version\obj\Debug\net8.0-windows7.0\CompressionApp.sourcelink.json

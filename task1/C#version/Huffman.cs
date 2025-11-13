@@ -15,7 +15,6 @@ namespace CompressionApp
             public bool IsLeaf => Left == null && Right == null;
         }
 
-        // Build frequency table and return encoded bitstring length (or actual bits)
         public static (Dictionary<int, string> Table, string EncodedBits) Encode(int[] data)
         {
             // 1. Count frequencies
@@ -60,7 +59,6 @@ namespace CompressionApp
             BuildCodeTable(node.Right!, prefix + "1", table);
         }
 
-        // Optional: Decode
         public static int[] Decode(string bits, Dictionary<int, string> table)
         {
             var rev = table.ToDictionary(kv => kv.Value, kv => kv.Key);
