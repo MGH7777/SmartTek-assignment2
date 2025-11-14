@@ -119,7 +119,7 @@ with c2:
 with c3:
     st.pyplot(figQ, clear_figure=True)
 
-# ---------------- Optional: histograms on one row ----------------
+# ---------------- histograms on one row ----------------
 with st.expander("Show DCT coefficient histograms (react to scenario & strength)"):
     def nz_hist_fig(Dq, title):
         fig = plt.figure(figsize=(3,2))
