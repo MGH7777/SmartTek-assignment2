@@ -28,23 +28,38 @@ def gaussian_kernel_1d(sigma: float, size: int) -> np.ndarray:
         size += 1
     half = size // 2
     x = np.arange(-half, half + 1, dtype=np.float32)
-    k = np.exp(-(x * x) / (2 * sigma * sigma))
+    k = np.exp(-(x * x) / (2.0 * sigma * sigma))
     k /= np.sum(k)
     return k.astype(np.float32)
 
+
 def convolve_separable(img: np.ndarray, kernel: np.ndarray) -> np.ndarray:
+    
+    h, w = img.shape
     half = len(kernel) // 2
-    # horizontal
-    padded = pad_edge(img, half, axis=1)
-    out_h = np.zeros_like(img)
-    for i in range(-half, half + 1):
-        out_h += kernel[i + half] * padded[:, i + half : i + half + img.shape[1]]
-    # vertical
-    padded_v = pad_edge(out_h, half, axis=0)
-    out_v = np.zeros_like(img)
-    for j in range(-half, half + 1):
-        out_v += kernel[j + half] * padded_v[j + half : j + half + img.shape[0], :]
-    return out_v
+
+    # Horizontal pass
+    horiz = np.zeros_like(img)
+    for y in range(h):
+        for x in range(w):
+            s = 0.0
+            for k in range(-half, half + 1):
+                xx = min(max(x + k, 0), w - 1)  # clamp at edges
+                s += img[y, xx] * kernel[k + half]
+            horiz[y, x] = s
+
+    # Vertical pass
+    out = np.zeros_like(img)
+    for y in range(h):
+        for x in range(w):
+            s = 0.0
+            for k in range(-half, half + 1):
+                yy = min(max(y + k, 0), h - 1)  # clamp at edges
+                s += horiz[yy, x] * kernel[k + half]
+            out[y, x] = s
+
+    return out
+
 
 def gaussian_blur(img: np.ndarray, sigma: float, size: int) -> np.ndarray:
     return convolve_separable(img, gaussian_kernel_1d(sigma, size))
@@ -163,4 +178,4 @@ with c3:
 st.markdown(f"**Reconstruction RMSE:** `{err:.6f}`")
 
 if __name__ == "__main__":
-    print("Launch with: streamlit run <this_file>.py")
+    print("Launch with: streamlit run app3.py")
