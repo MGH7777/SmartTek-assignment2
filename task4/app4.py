@@ -1,10 +1,4 @@
 # app.py
-# ---------------------------------------------------------------------------
-# Wavelet Multi-Resolution Analysis (MRA) GUI with edges, morphology, SIFT/ORB,
-# ROI extraction, and video support (intra/differential). Supports standard
-# images and DICOM (.dcm). Includes Canny threshold sliders.
-# Results are shown in a compact grid (side-by-side) for easy comparison.
-# ---------------------------------------------------------------------------
 
 import io
 import math
@@ -26,7 +20,7 @@ try:
 except Exception:
     HAVE_PYWT = False
 
-# DICOM (optional)
+# DICOM 
 try:
     import pydicom
     from pydicom.pixel_data_handlers.util import apply_voi_lut
@@ -313,7 +307,7 @@ def process_image(img_bgr: np.ndarray,
 def process_video_frames(frames_bgr: List[np.ndarray],
                          levels: int,
                          wavelet: str,
-                         mode: str,          # 'intra' or 'diff'
+                         mode: str,          
                          edge_method: str,
                          morph_op: str,
                          morph_k: int,
@@ -350,13 +344,6 @@ def process_video_frames(frames_bgr: List[np.ndarray],
 st.set_page_config(page_title="Wavelet MRA GUI", layout="wide")
 st.title("Wavelet Multi-Resolution Analysis (MRA) — Edges • Morphology • SIFT/ORB • Video")
 
-with st.expander("Why MRA is useful (brief)"):
-    st.markdown(
-        "- **Scale separation:** decomposes an image into coarse structure and fine details so   can work at the scale that matters.\n"
-        "- **Noise robustness:** edges/features from coarse approximations ignore small noise but keep important boundaries.\n"
-        "- **Spatial + scale locality:** wavelets preserve where and at what scale features exist, aiding ROI detection.\n"
-        "- **Efficiency:** processing at lower resolutions is faster; great for video intra/differential analysis."
-    )
 
 left, right = st.columns([0.9, 1.1])
 
@@ -371,7 +358,6 @@ with left:
     wavelet = st.text_input("Wavelet (PyWavelets)", "db2")
     edge_method = st.selectbox("Edge detector", ["canny", "sobel", "laplacian"])
 
-    # Canny parameter sliders (only when canny is selected)
     if edge_method.lower() == "canny":
         st.markdown("**Canny Thresholds**")
         canny_low = st.slider("Canny low", 0, 255, 100)
@@ -544,7 +530,7 @@ with right:
                     cap = cv2.VideoCapture(tmp_path)
                     frames = []
                     ok, fr = cap.read()
-                    max_frames = 180  # limit for responsiveness
+                    max_frames = 180 
                     while ok:
                         frames.append(fr)
                         if len(frames) >= max_frames:
